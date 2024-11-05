@@ -1,0 +1,135 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video Web Tutorials{% endblock %}
+
+{% block body %}
+
+{# PAGE TITLE ------------------------------------------ #}
+
+{% set a = videos_all|length %} 
+    <h1 align="center">{{ 'WebDev Video Tutorials'|trans }} ({{ a }} videos)</h1>
+    {# {% set total_videos = total_videos or 0 %} {# This ensures total_videos is defined #}
+    {# <h1 align="center">
+        {{ 'WebDev Video Tutorials'|trans }} ({{ total_videos }} videos)
+    </h1> #}
+    <br>
+    <br>
+
+    <div class="container text-center">
+     <div class="row">
+
+        {% include "layouts/_search_data.html.twig" with { form: form } only %}
+
+{# SEARCH BAR ------------------------------------------ #}
+
+            <div class="row">
+                <div class="col-md-6 mx-auto">
+                    {% if search %}
+                        {% set video_count = nbVideosFind|length %}
+                        {{ video_count }} video(s) found with the terms "{{ searchData }}"<br><br>
+                    {% endif %}
+                </div>
+            </div>
+
+{# VIDEOS CARD ------------------------------------------ #}
+        {% for x in videos_all %}
+            <div class="card max-w-sm col-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 my-8 mr-4" data-type="post">
+
+    {# VIDEOS/TITLE-------------------------------------- #}
+     
+                     <h5>
+                        <a href="{{ path('app_video_show', {id: x.id}) }}">
+                            {{ x.title | u.truncate(30, '...', false) }}
+                        </a>
+                    </h5>
+
+                    <br>
+
+    {# VIDEOS/VIDEO-------------------------------------- #}
+
+                    <div align="center" style="position: relative;">
+                        {# Display the star icon for premium videos #}
+
+            {# PREMIUM VIDEOS/STAR ---------------------- #}
+{# 
+                        {% if x.premium %}
+                            <span class="premium-icon">
+                                <img src="/images/star_icon.png?{{ random() }}" alt="" style="width: 30px; height: 30px;" > #}
+                                {# HAVING /images (ABSOLUTE PATH) INSTEAD OF images (RELATIVE PATH) SOLVES THE PATH ISSUE WHEN RETURNING BACK TO THE SAME PAGE AFTER NAVIGATING TO ANOTHER. 
+                                If the issue only occurs when returning to the page, it’s possible that the relative path to the image is broken when the page is reloaded via browser history. If the path to the image depends on the current URL, it might fail when revisiting the page #}
+                             {# </span>
+          
+                        {% endif %} #}
+
+            {# ------------------------------------------ #}
+
+                        <iframe width="100%" height="200" src="{{ x.videoLink }}" frameborder="0" allowfullscreen></iframe>
+                    </div>
+
+    {# -------------------------------------------------- #}
+
+    {# VIDEOS/INFO--------------------------------------- #}
+
+                    <div>
+                       
+                       <br><p style="text-align: left; font-size: 12px;">
+                     
+                       {{ x.description|slice(0, 200) ~ '...' }}
+
+                       </p>
+                        
+                        <div class="video_date_publication"><p>
+                            {{ 'Submitted'|trans }}
+                            {% if x.createdAt %}
+                                {% set now = date() %}
+                                {% set createdAt = x.createdAt|date('Y-m-d H:i:s') 
+                                %}
+                                {% set diff = now.diff(date(createdAt)) %}
+                                
+                                {% if diff.y > 0 %}
+                                    {{ diff.y }} year{{ diff.y > 1 ? 's' : '' }} ago
+                                {% elseif diff.m > 0 %}
+                                    {{ diff.m }} month{{ diff.m > 1 ? 's' : '' }} ago
+                                {% elseif diff.d > 0 %}
+                                    {{ diff.d }} day{{ diff.d > 1 ? 's' : '' }} ago
+                                {% else %}
+                                    today
+                                {% endif %}
+                            {% endif %}
+                            
+                            {# {% if x.premium %}
+                                 &nbsp;<span style="color: brown; font-weight:bold">(Premium)</span>
+                            {% endif %}  #}
+                        </p>
+                        </div>
+
+                        <p>{{ 'By'|trans }} {{ x.user.firstname ~ " " ~ x.user.lastname }}</p>
+                    </div>
+        
+    {# -------------------------------------------------- #}         
+
+                </div>
+
+            {% endfor %}
+
+    {# END VIDEOS CARD ---------------------------------- #}   
+
+        </div>
+
+    {# END ROW ------------------------------------------ #} 
+
+
+{# PAGINATOR -------------------------------------------- #}  
+        <br>
+
+        <div class="parent-container" style="display: flex; justify-content: center;">
+            <div class="navigation flex justify-content mb-8"> 
+                {{ knp_pagination_render(videos_all) }}
+            </div>
+        </div>
+
+{# ------------------------------------------------------ #}   
+
+    </div>
+
+{% endblock %}

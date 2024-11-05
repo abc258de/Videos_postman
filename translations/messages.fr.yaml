@@ -1,0 +1,41 @@
+
+Account: 'Mon Compte'
+Logout: Sortir
+Login: Entrer
+SignUp: Enregistrement
+Home: Accueil
+Submitted: Publiée
+By: Par
+Updated: 'Modifié le'
+registerform.title: Inscription
+registerform.submit: "S'enrigistrer"
+registerForm.firstname: Prénom
+registerForm.lastname: Nom
+registerForm.email: 'Addresse email'
+registerForm.agreeTerms: 'Accepetr les termes'
+Password: 'Mot de passe'
+'Your email address is not verified. Please check your email box with instructions': "Votre adresse email n'est pas encore confirmé. Veuillez voir votre email box avec des instructions"
+'recipeController.Your email address is not verified. Please check your email box with instructions': Votre email n'a pas été verifié. Veuillez voir votre email et suivre les instructions'
+accountShow.title: __accountShow.title
+accountShow.profile: 'Mon Profil'
+accountShow.accountCreatedAt: 'Compte créé le'
+accountShow.editAccount: Edit
+
+'Account successfuly updated !': 'Compte mise à jour !'
+'Update Profile': 'Profil mis à jour'
+'Apply changes': 'Appliquer les changements'
+
+userForm.firstname: 'Prénom'
+userForm.lastname: 'Nom'
+userForm.imageFile: 'Image'
+
+'Forgot password?': 'Oublié son mot de passe?'
+'Welcome back': 'Bienvenu(e)'
+'Sign in': 'Entrer'
+'Not registered yet?': 'Pas encore inscript?'
+'Create an account': 'Creé une compte ici'
+'Agree terms': 'Concorder avec les Termes'
+'WebDev Video Tutorials': 'Videos Tutoriels WebDev'
+'Register': "S'enrigistrer"
+# 'Home': 'Accueil'
+'Dev:Create new': 'Dev:Ajouter Video'

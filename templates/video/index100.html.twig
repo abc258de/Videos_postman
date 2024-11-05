@@ -1,0 +1,85 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Video Web Tutorials{% endblock %} 
+
+{% block body %}
+
+{% set a = videos_all|length %} 
+    <h1 align="center">{{'WebDev Video Tutorials'|trans}}({{a}} videos)</h1>
+    <br>
+    <br>
+    <div class = "container text-center">
+        <div class = "row">
+
+            {% include "layouts/_search_data.html.twig" with {
+                form: form
+            } only %}
+
+            <div class = "row">
+              <div class= "col-md-6 mx-auto">
+                {% if search %}
+                    {% set video_count = nbVideosFind|length %}
+                    {{ video_count }} video(s) founded with the terms "{{ searchData }}"<br><br>
+                {% endif %}
+              </div>
+            </div> 
+
+            {% for x in videos_all %}
+                <div class="card max-w-sm col-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 my-8 mr-4" data-type="post">
+
+                    <h5><a href={{ path('app_video_show', {id : x.id})}}>{{ x.title | u.truncate(20,'...',false)}} </a></h5>
+                    <br>
+
+
+                    <div align="center">
+                       <iframe width="300" height="200" src="{{ x.videoLink }}" frameborder="0" allowfullscreen> </iframe>
+                    </div>
+
+                    <div>
+                        <br><p style=" text-align: left; font-size: 12px;">{{x.description|slice(0, 25) ~ '...' }}</p>
+
+                        {# <p>{{'Submitted'|trans}} {{ x.createdAt ? x.createdAt|date('Y-m-d H:i:s') : ''}}</p> #}
+                        
+                    <p>
+                        {{ 'Submitted'|trans }}
+                        {% if x.createdAt %}
+                            {% set now = date() %}
+                            {% set createdAt = x.createdAt|date('Y-m-d H:i:s') %}
+                            {% set diff = now.diff(date(createdAt)) %}
+                            
+                            {% if diff.y > 0 %}
+                                {{ diff.y }} year{{ diff.y > 1 ? 's' : '' }} ago
+                            {% elseif diff.m > 0 %}
+                                {{ diff.m }} month{{ diff.m > 1 ? 's' : '' }} ago
+                            {% elseif diff.d > 0 %}
+                                {{ diff.d }} day{{ diff.d > 1 ? 's' : '' }} ago
+                            {% else %}
+                                today
+                            {% endif %}
+                        {% endif %}
+                    </p>
+
+                        <p>{{'By'|trans}} {{ x.user.firstname ~" "~ x.user.lastname}}</p>
+                    </div> 
+                </div>        
+            {# {% else %} #}
+                {# <p>Pas encore de videos</p> #}
+            {% endfor %}
+        </div>
+        <br>
+
+        <div class="parent-container" style="display: flex; justify-content: center;" >
+            <div class="navigation flex justify-content mb-8"> 
+                {{ knp_pagination_render(videos_all) }}
+            </div>
+        </div>
+
+
+
+    </div>
+
+  
+
+{% endblock %}
+
+
